@@ -1,7 +1,7 @@
 const TaskModel = require("../models/TaskModel");
 
 const CreateTask = async (req, res) => {
-  const { projectTitle, assignedTo, description, startDate, endDate } = req.body;
+  const { projectTitle, assignedTo, description, startDate, endDate, assignedby } = req.body;
 
   try {
     // Validate description length
@@ -31,6 +31,7 @@ const CreateTask = async (req, res) => {
       description,
       startDate,
       endDate,
+      assignedby,
     });
 
     const taskResult = await createNewTask.save();
@@ -44,7 +45,7 @@ const CreateTask = async (req, res) => {
 
 const GetAllTask = async (req, res) => {
   try {
-    const result = await TaskModel.find().sort({ createdAt: -1 });
+    const result = await TaskModel.find().sort({ createdAt: -1 }).populate("assignedby");
     res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -77,6 +78,7 @@ const UpdateSingleTask = async (req, res) => {
     projectLink,
     status,
     isCompleted,
+    assignedby,
   } = req.body;
 
   try {
@@ -87,6 +89,7 @@ const UpdateSingleTask = async (req, res) => {
 
     if (projectTitle) task.projectTitle = projectTitle;
     if (assignedTo) task.assignedTo = assignedTo;
+    if (assignedby) task.assignedby = assignedby;
     if (description) task.description = description;
     if (startDate) task.startDate = startDate;
     if (endDate) task.endDate = endDate;

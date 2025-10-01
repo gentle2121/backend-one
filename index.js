@@ -4,10 +4,12 @@ const dotenv = require("dotenv").config();
 const colors = require("colors");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-
+const path =require("path")
 const UserRoutes = require("./routes/UserRoutes");
 const taskRoutes = require("./routes/TaskRoutes");
-
+const StudentRoutes = require("./routes/StudentRoutes");
+const forumRoutes = require("./routes/ForumRoutes")
+const primaryRoutes=require("./routes/PrimaryRoutes")
 connectDB();
 const app = express();
 
@@ -15,7 +17,12 @@ app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 app.use(bodyParser.json());
 
+app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // serve uploaded files
 
+// Routes
+app.use("/api/PrimaryStudent", primaryRoutes);
+app.use("/api/Student",StudentRoutes );
+app.use("/api/forum", forumRoutes);
 app.use("/api/Task", taskRoutes);
 app.use("/api/User", UserRoutes);
 

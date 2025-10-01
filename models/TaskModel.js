@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const {ObjectId}=mongoose.Schema.Types;
 const TaskSchema = mongoose.Schema(
   {
     projectTitle: {
@@ -11,6 +12,13 @@ const TaskSchema = mongoose.Schema(
       minlenght: 5,
       maxlength: 1000,
     },
+assignedby:{
+  type:mongoose.Schema.Types.ObjectId,
+  ref:"User",
+  required:true,
+},
+
+
     assignedTo: {
       type: String,
       required: [true, "Pls input field is required "],
