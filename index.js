@@ -2,7 +2,7 @@ const express = require("express");
 const connectDB = require("./config/db");
 const dotenv = require("dotenv").config();
 const colors = require("colors");
-const cors = require("cors");
+const cors = require("cors"); 
 const bodyParser = require("body-parser");
 const path =require("path")
 const UserRoutes = require("./routes/UserRoutes");
@@ -16,8 +16,8 @@ const app = express();
 // app.use(cors({ origin: "http://localhost:5173" })); 
 
 const allowedOrigins = [
-  "http://localhost:5173",                // local frontend (Vite)
-  "https://vincentacademy.netlify.app/"     // replace with your actual Netlify URL
+  "http://localhost:5173",               // local frontend (Vite)
+  "https://vincentacademy.netlify.app"     // replace with your actual Netlify URL
 ];
 
 app.use(cors({
