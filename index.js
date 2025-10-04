@@ -13,7 +13,27 @@ const primaryRoutes=require("./routes/PrimaryRoutes")
 connectDB();
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173" })); 
+// app.use(cors({ origin: "http://localhost:5173" })); 
+
+const allowedOrigins = [
+  "http://localhost:5173",                // local frontend (Vite)
+  "https://vincentacademy.netlify.app/"     // replace with your actual Netlify URL
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like Postman or curl)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  }
+}));
+
+
+
+
 app.use(express.json());
 app.use(bodyParser.json());
 
